@@ -16,20 +16,20 @@
 				<legend>Регистрация</legend>
 				<div class="form-group">
 			    	<label>Имя пользователя</label>
-			    	<input type="text" class="form-control" ng-model="userName" required>
+			    	<input type="text" class="form-control" ng-model="userName" requared>
 			  	</div>
 				<div class="form-group">
 			    	<label>Пароль</label>
-			    	<input type="password" class="form-control" ng-model="password" required>
+			    	<input type="password" class="form-control" ng-model="password" requared>
 			  	</div>
 				<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 			</form>
 		</div>
 		<div class="well well-sm" ng-show="userExists">
-			<p ng-hide="connected">Подключение...</p>
-			<form ng-show="connected && !session" ng-submit="call(phoneNumber)">
+			<p ng-hide="ua">Подключение...</p>
+			<form ng-show="ua && !session" ng-submit="call(phoneNumber)">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="+7(XXX)XXX-XX-XX" required ng-model="phoneNumber"/>
+					<input type="text" class="form-control" placeholder="+7(XXX)XXX-XX-XX" requared ng-model="phoneNumber"/>
 					<span class="input-group-btn">
 			       <button class="btn btn-success" type="submit">
 						   <span class="glyphicon glyphicon-earphone"></span>
@@ -37,7 +37,7 @@
 			    </span>
 				</div>
 			</form>
-			<div ng-show="connected && session">
+			<div ng-show="ua && session">
 				<div>
 					<strong>{{phoneNumber}}</strong>
 				</div>
@@ -48,8 +48,8 @@
 				</div>
 			</div>
 		</div>
-		<video id="remoteVideo"></video>
-    <video id="localVideo" muted="muted"></video>
+		<video id="remoteVideo" style="width: 0px; heigth: 0px;"></video>
+                <video id="localVideo" style="width: 0px; heigth: 0px;"></video>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 	<script src="//cdn.jsdelivr.net/ngstorage/0.3.7/ngStorage.min.js"></script>

@@ -7,7 +7,7 @@ var domain = window.location.hostname;
 function initializeSipConnection(scope, localStorage) {
   var config = {
     uri: localStorage.userName + "@" + domain,
-    ws_servers: "ws" + ((window.location.protocol === "https:") ? "s" : "") + "://" + domain + ":5065",
+    ws_servers: "ws" + ((window.location.protocol === "https:") ? "s" : "") + "://" + domain + ":7443",
     authorizationUser: localStorage.userName,
     password: localStorage.password
   };
@@ -42,6 +42,11 @@ app.controller("PhoneCtrl", function ($scope, $localStorage) {
       }
     };
     $scope.session = $scope.ua.invite("sip:" + phoneNumber +  "@" + domain, options);
+    $scope.session.on("bye", function(){
+      $scope.$apply(function(){
+        $scope.session = null;
+      });
+    });	
 	};
 
 	$scope.hangUp = function () {

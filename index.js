@@ -1,10 +1,15 @@
 var hapi = require("hapi");
+var fs = require("fs");
 
 var server = new hapi.Server({ debug: { request: ["*"] }});
 
 server.connection({
   host: "0.0.0.0",
-  port: process.env.PORT || 3000
+  port: process.env.PORT || 3000,
+  tls: {
+    key: fs.readFileSync("/home/andrey/squirrel-server.tk.key"),
+    cert: fs.readFileSync("/home/andrey/squirrel-server.tk.crt")
+  }
 });
 
 server.route({
