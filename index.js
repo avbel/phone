@@ -7,8 +7,8 @@ server.connection({
   host: "0.0.0.0",
   port: process.env.PORT || 3000,
   tls: {
-    key: fs.readFileSync("/home/andrey/squirrel-server.tk.key"),
-    cert: fs.readFileSync("/home/andrey/squirrel-server.tk.crt")
+    key: fs.readFileSync("phone.key"),
+    cert: fs.readFileSync("phone.crt")
   }
 });
 
