@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="./css/main.css" />
+  <title>Web Phone</title>
+</head>
+<body ng-app="phone">
+	<div class="container ng-cloak" ng-controller="PhoneCtrl" ng-hide="hideUI">
+		<div class="alert alert-danger" ng-show="error">{{error}}</div>
+		<div class="well" ng-hide="userExists">
+			<form ng-submit="register(userName, password)">
+				<legend>Регистрация</legend>
+				<div class="form-group">
+			    	<label>Имя пользователя</label>
+			    	<input type="text" class="form-control" ng-model="userName" required>
+			  	</div>
+				<div class="form-group">
+			    	<label>Пароль</label>
+			    	<input type="password" class="form-control" ng-model="password" required>
+			  	</div>
+				<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+			</form>
+		</div>
+		<div class="well well-sm" ng-show="userExists">
+			<p ng-hide="connected">Подключение...</p>
+			<form ng-show="connected && !session" ng-submit="call(phoneNumber)">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="+7(XXX)XXX-XX-XX" required ng-model="phoneNumber"/>
+					<span class="input-group-btn">
+			       <button class="btn btn-success" type="submit">
+						   <span class="glyphicon glyphicon-earphone"></span>
+					   </button>
+			    </span>
+				</div>
+			</form>
+			<div ng-show="connected && session">
+				<div>
+					<strong>{{phoneNumber}}</strong>
+				</div>
+				<div>
+					<button class="btn btn-danger btn-block" type="button" ng-click="hangUp()">
+					   <span class="glyphicon glyphicon-earphone"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<video id="remoteVideo"></video>
+    <video id="localVideo" muted="muted"></video>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+	<script src="//cdn.jsdelivr.net/ngstorage/0.3.7/ngStorage.min.js"></script>
+	<script src="js/sip.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
