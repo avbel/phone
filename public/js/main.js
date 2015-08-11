@@ -17,51 +17,51 @@ function initializeSipConnection(scope, localStorage) {
 
 
 app.controller("PhoneCtrl", function ($scope, $localStorage) {
-	$scope.userExists = ($localStorage.userName && $localStorage.password);
-	$scope.phoneNumber = $localStorage.phoneNumber;
+  $scope.userExists = ($localStorage.userName && $localStorage.password);
+  $scope.phoneNumber = $localStorage.phoneNumber;
 
-	$scope.register = function (userName, password) {
-		$localStorage.userName = userName;
-		$localStorage.password = password;
-		$scope.userExists = true;
-		initializeSipConnection($scope, $localStorage);
-	};
+  $scope.register = function (userName, password) {
+    $localStorage.userName = userName;
+    $localStorage.password = password;
+    $scope.userExists = true;
+    initializeSipConnection($scope, $localStorage);
+  };
 
-	$scope.call = function (phoneNumber) {
-		$localStorage.phoneNumber = phoneNumber;
+  $scope.call = function (phoneNumber) {
+    $localStorage.phoneNumber = phoneNumber;
     var options = {
       media: {
         constraints: {
-            audio: true,
-            video: false
+          audio: true,
+          video: false
         },
         render: {
-            remote: document.getElementById('remoteVideo'),
-            local: document.getElementById('localVideo')
+          remote: document.getElementById('remoteVideo'),
+          local: document.getElementById('localVideo')
         }
       }
     };
-    $scope.session = $scope.ua.invite("sip:" + phoneNumber +  "@" + domain, options);
-    $scope.session.on("bye", function(){
-      $scope.$apply(function(){
+    $scope.session = $scope.ua.invite("sip:" + phoneNumber + "@" + domain, options);
+    $scope.session.on("bye", function () {
+      $scope.$apply(function () {
         $scope.session = null;
       });
-    });	
-	};
+    });
+  };
 
-	$scope.hangUp = function () {
-		if ($scope.session) {
-			$scope.session.bye();
-			$scope.session = null;
-		}
-	};
+  $scope.hangUp = function () {
+    if ($scope.session) {
+      $scope.session.bye();
+      $scope.session = null;
+    }
+  };
 
-	$scope.showError = function (err) {
-		console.error(err);
-		$scope.error = err.message || err;
-	};
+  $scope.showError = function (err) {
+    console.error(err);
+    $scope.error = err.message || err;
+  };
 
-	if ($scope.userExists) {
-		initializeSipConnection($scope, $localStorage);
-	}
+  if ($scope.userExists) {
+    initializeSipConnection($scope, $localStorage);
+  }
 });
