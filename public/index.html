@@ -10,6 +10,7 @@
 <body ng-app="phone">
   <div class="container ng-cloak" ng-controller="PhoneCtrl" ng-hide="hideUI">
     <div class="alert alert-danger" ng-show="error">{{error}}</div>
+    <div class="alert alert-info" ng-show="status">{{status}}</div>
     <div class="well" ng-hide="userExists">
       <h3>Регистрация</h3>
       <form ng-submit="register(userName, password)">

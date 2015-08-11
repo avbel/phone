@@ -41,18 +41,40 @@ app.controller("PhoneCtrl", function ($scope, $localStorage) {
         }
       }
     };
+    $scope.status = "Соединение ...";
     $scope.session = $scope.ua.invite("sip:" + phoneNumber + "@" + domain, options);
     $scope.session.on("bye", function () {
       $scope.$apply(function () {
         $scope.session = null;
+        $scope.status = null;
       });
     });
+
+    $scope.session.on("accepted", function () {
+      $scope.$apply(function () {
+        $scope.status = "Соединение установлено";
+      });
+    });
+
+    $scope.session.on("rejected", function () {
+      $scope.$apply(function () {
+        $scope.session = null;
+        $scope.status = "Звонок был отклонён";
+      });
+    });
+
   };
 
   $scope.hangUp = function () {
     if ($scope.session) {
-      $scope.session.bye();
+      try{
+        $scope.session.bye();
+      }
+      catch (err) {
+        console.error(err);
+      }
       $scope.session = null;
+      $scope.status = null;
     }
   };
 
