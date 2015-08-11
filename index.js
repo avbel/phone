@@ -1,7 +1,16 @@
 var hapi = require("hapi");
 var fs = require("fs");
 
-var server = new hapi.Server({ debug: { request: ["*"] }});
+var server = new hapi.Server({
+  debug: { request: ["*"] },
+  connections: {
+    routes: {
+      files: {
+        relativeTo: __dirname
+      }
+    }
+  }
+});
 
 server.connection({
   host: "0.0.0.0",
