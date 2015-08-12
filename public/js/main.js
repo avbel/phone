@@ -12,7 +12,24 @@ function initializeSipConnection(scope, localStorage) {
     password: localStorage.password
   };
 
-  scope.ua = new SIP.UA(config);
+   var ua = new SIP.UA(config);
+   ua.on("registered", function(){
+     scope.$apply(function(){
+       scope.ua = ua;
+       scope.error = null;
+     });
+   });
+   ua.on("registrationFailed", function(){
+     setTimeout(function(){
+       if(scope.ua) return;
+       scope.$apply(function(){
+         scope.ua = null;
+         scope.userExists = false;
+         scope.showError("Неверные имя пользователя или пароль");
+       });
+     }, 500);  
+   });
+   ua.register();
 };
 
 
@@ -36,8 +53,8 @@ app.controller("PhoneCtrl", function ($scope, $localStorage) {
           video: false
         },
         render: {
-          remote: document.getElementById('remoteVideo'),
-          local: document.getElementById('localVideo')
+          remote: document.getElementById("remoteVideo"),
+          local: document.getElementById("localVideo")
         }
       }
     };
